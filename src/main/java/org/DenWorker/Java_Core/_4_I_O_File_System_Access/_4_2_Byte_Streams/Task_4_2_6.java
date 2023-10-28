@@ -11,9 +11,10 @@ public class Task_4_2_6 {
     }
 
     public static void print(InputStream inputStream, OutputStream outputStream) throws IOException {
-        for (byte iterator : inputStream.readAllBytes()) {
-            if (iterator % 2 == 0) {
-                outputStream.write(iterator);
+        int buf;
+        while ((buf = inputStream.read()) != -1) {
+            if ((byte) buf % 2 == 0) {
+                outputStream.write(buf);
             }
         }
         outputStream.flush();

@@ -1,21 +1,25 @@
 package org.DenWorker.Java_Core._4_I_O_File_System_Access._4_4_Advanced_Features;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.Serializable;
+import java.io.*;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class Task_4_4_5 {
-    public static void main(String[] args) {
-        System.out.println("gg");
+    public static void main(String[] args) throws IOException {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+        objectOutputStream.writeInt(3);
+        objectOutputStream.writeObject(new Animal("Fox"));
+        objectOutputStream.writeObject(new Animal("Wolf"));
+        objectOutputStream.writeObject(new Animal("Dog"));
+        objectOutputStream.close();
+        System.out.println(Arrays.toString(deserializeAnimalArray(byteArrayOutputStream.toByteArray())));
     }
 
     public static Animal[] deserializeAnimalArray(byte[] data) {
         try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(data); ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream)) {
-            int size = objectInputStream.readInt();
-            Animal[] result = new Animal[size];
-            for (int i = 0; i < size; i++) {
+            Animal[] result = new Animal[objectInputStream.readInt()];
+            for (int i = 0; i < result.length; i++) {
                 result[i] = (Animal) objectInputStream.readObject();
             }
             return result;
@@ -24,8 +28,8 @@ public class Task_4_4_5 {
             throw new IllegalArgumentException(e);
         }
     }
-    
-    class Animal implements Serializable {
+
+    static class Animal implements Serializable {
         private final String name;
 
         public Animal(String name) {
@@ -38,6 +42,11 @@ public class Task_4_4_5 {
                 return Objects.equals(name, ((Animal) obj).name);
             }
             return false;
+        }
+
+        @Override
+        public String toString() {
+            return "Animal{" + "name='" + name + '\'' + '}';
         }
     }
 }
