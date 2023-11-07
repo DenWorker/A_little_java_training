@@ -1,8 +1,12 @@
 package org.DenWorker.Java_Core._5_Generics_Collections._5_2_Collections;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Task_5_2_14 {
     public static void main(String[] args) {
@@ -12,15 +16,9 @@ public class Task_5_2_14 {
 
     public static Map<String, Long> getSalesMap(Reader reader) {
         Map<String, Long> resultMap = new HashMap<>();
-        String line;
-        String[] partsOfLine;
-        try (BufferedReader bufferedReader = new BufferedReader(reader)) {
-            while ((line = bufferedReader.readLine()) != null) {
-                partsOfLine = line.split(" ");
-                resultMap.merge(partsOfLine[0], Long.valueOf(partsOfLine[1]), Long::sum);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        Scanner scanner = new Scanner(reader);
+        while (scanner.hasNext()) {
+            resultMap.merge(scanner.next(), scanner.nextLong(), Long::sum);
         }
         return resultMap;
     }

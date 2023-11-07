@@ -33,10 +33,6 @@ public class Task_5_1_15 {
         public DynamicArray() {
         }
 
-        public int getSize() {
-            return this.size;
-        }
-
         public void add(T el) {
             if (size == this.dynamicArray.length) {
                 this.dynamicArray = Arrays.copyOf(this.dynamicArray, this.dynamicArray.length + 5);
@@ -45,9 +41,6 @@ public class Task_5_1_15 {
         }
 
         public void remove(int index) {
-            if (index >= this.size) {
-                throw new ArrayIndexOutOfBoundsException();
-            }
             System.arraycopy(this.dynamicArray, index + 1, this.dynamicArray, index, this.dynamicArray.length - index - 1);
             this.size--;
         }
@@ -59,14 +52,6 @@ public class Task_5_1_15 {
             return this.dynamicArray[index];
         }
 
-        @Override
-        public String toString() {
-            StringBuilder strArray = new StringBuilder().append("[");
-            for (int i = 0; i < size; i++) {
-                strArray.append(this.dynamicArray[i]).append(", ");
-            }
-            return strArray.delete(strArray.length() - 2, strArray.length()).append("]").toString();
-        }
     }
 
 }
